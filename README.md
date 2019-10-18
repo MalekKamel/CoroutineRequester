@@ -1,4 +1,4 @@
-# RxRequester
+# CorotineRequester
 
 <img src="https://github.com/ShabanKamell/CoroutineRequester/blob/master/blob/raw/logo.png" height="200">
 
@@ -8,7 +8,7 @@ A simple wrapper for RxJava that helps you:
 
 RxRequester does all the dirty work for you!
 
-### Before RxRequester
+### Before CorotineRequester
 
 ``` kotlin
 dm.restaurantsRepo.all()
@@ -23,7 +23,7 @@ dm.restaurantsRepo.all()
                 })
 ```
 
-### After RxRequester
+### After CorotineRequester
 
 ``` kotlin
 requester.request { dm.restaurantsRepo.all() }.subscribe { }
@@ -39,11 +39,11 @@ allprojects {
 }
 
 dependencies {
-        implementation 'com.github.ShabanKamell:RxRequester:x.y.z'
+        implementation 'com.github.ShabanKamell:CorotineRequester:x.y.z'
 }
 
 ```
-(Please replace x, y and y with the latest version numbers:  [![](https://jitpack.io/v/ShabanKamell/RxRequester.svg)](https://jitpack.io/#ShabanKamell/RxRequester))
+(Please replace x, y and y with the latest version numbers:  [![](https://jitpack.io/v/ShabanKamell/CorotineRequester.svg)](https://jitpack.io/#ShabanKamell/CorotineRequester))
 
 ### Usage
 #### Setup
@@ -57,7 +57,7 @@ val presentable = object: Presentable {
             override fun onHandleErrorFailed() { showErrorRes.value = R.string.oops_something_went_wrong }
         }
 
-       val requester = RxRequester.create(ErrorContract::class.java, presentable)
+       val requester = CorotineRequester.create(ErrorContract::class.java, presentable)
 ```
 
 #### Server Error Contract
@@ -74,12 +74,12 @@ data class ErrorContract(private val message: String): ErrorMessage {
 
 #### Handle Errors
 ```kotlin
-            RxRequester.nonHttpHandlers = listOf(
+            CorotineRequester.nonHttpHandlers = listOf(
                     IoExceptionHandler(),
                     NoSuchElementHandler(),
                     OutOfMemoryErrorHandler()
             )
-            RxRequester.httpHandlers = listOf(
+            CorotineRequester.httpHandlers = listOf(
                     TokenExpiredHandler(),
                     ServerErrorHandler()
             )
@@ -103,33 +103,31 @@ class ServerErrorHandler : HttpExceptionHandler() {
 
 Or `NonHttpExceptionHandler`
 ``` kotin
-class OutOfMemoryErrorHandler : NonHttpExceptionHandler<OutOfMemoryError>() {
+class OutOfMemoryErrorHandler : ThrowableHandler<OutOfMemoryError>() {
 
-    override fun supportedThrowables(): List<Class<OutOfMemoryError>> {
+    override fun supportedErrors(): List<Class<OutOfMemoryError>> {
         return listOf(OutOfMemoryError::class.java)
     }
 
-    override fun handle(info: NonHttpExceptionInfo) {
+    override fun handle(info: ThrowableInfo) {
         info.presentable.showError(R.string.no_memory_free_up_space)
     }
 }
 ```
 
 #### Customizing Requests
-RxRequester gives you the full controll over any request
+CorotineRequester gives you the full controll over any request
 - [ ] Inline error handling
 - [ ] Enable/Disable loading indicators
-- [ ] Set subscribeOn Scheduler
-- [ ] Set observeOn Scheduler
+- [ ] Set Coroutine dispatcher
 
 ``` kotlin
-val requestInfo = RequestInfo.Builder()
+val requestOptions = RequestOptions.Builder()
                 .inlineErrorHandling { false }
                 .showLoading(true)
-                .subscribeOnScheduler(Schedulers.io())
-                .observeOnScheduler(AndroidSchedulers.mainThread())
+                .dispatcher(Dispatchers.Main)
                 .build()
-requester.request(requestInfo) { dm.restaurantsRepo.all() }
+requester.request(requestOptions) { dm.restaurantsRepo.all() }
 ```
 
 Here're all request options and default values
@@ -138,19 +136,18 @@ Here're all request options and default values
 | ------------- | ------------- | ------------- |
 | **inlineHandling**           | Lambda       | null |
 | **showLoading**              | Boolean      | true |
-| **subscribeOnScheduler**     | Scheduler    | Schedulers.io() |
-| **observeOnScheduler**       | Scheduler    | AndroidSchedulers.mainThread() |
+| **subscribeOnScheduler**     | CoroutineDispatcher    | Dispatchers.Main |
 
 ### Retrying The Request
 You can retry the request in any error handler class by calling `HttpExceptionInfo.retryRequest()`.
 This is very useful when you receive `401` indicating the token was EXPIRED. To fix the issue, call the refresh token API inside the handler, then retry the request again without interrupting the user. For more, look at `TokenExpiredHandler` in sample module.
 
 ### Best Practices
-- [ ] Setup `RxRequester` only once in `BaseViewModel` and reuse in the whole app.
+- [ ] Setup `CorotineRequester` only once in `BaseViewModel` and reuse in the whole app.
 - [ ] Initialize error handlers only once.
-- [ ] Dispose `RxRequester` in `ViewModel.onCleared()`.
+- [ ] Use a scope for runnig coroutine. i.e. viewModelScope.
 
-#### Look at 'sample' module for the full code. For more advanced example, [Restaurants Modular Architecture](https://github.com/ShabanKamell/Restaurants)
+#### Look at 'sample' module for the full code. For more advanced example.
 
 ### License
 
