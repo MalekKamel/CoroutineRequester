@@ -42,7 +42,6 @@ class PicassoUtil {
 
                 if (placeholder != null) creator.error(placeholder)
 
-
                 creator.into(
                         iv,
                          object: Callback {
