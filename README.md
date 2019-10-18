@@ -11,15 +11,15 @@ CorotineRequester does all the dirty work for you!
 ### Before CorotineRequester
 
 ``` kotlin
-             try {
-                 toggleLoading(show = true)
-                 val result = dm.restaurantsRepo.all()
-             } catch (error: Exception) {
-                 // handle exception
-                 toggleLoading(show = false)
-             } finally {
-                 toggleLoading(show = false)
-             }
+    try {
+      toggleLoading(show = true)
+      val result = dm.restaurantsRepo.all()
+    } catch (error: Exception) {
+       // handle exception
+       toggleLoading(show = false)
+    } finally {
+       toggleLoading(show = false)
+    }
 ```
 
 ### After CorotineRequester
