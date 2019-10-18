@@ -11,22 +11,21 @@ CorotineRequester does all the dirty work for you!
 ### Before CorotineRequester
 
 ``` kotlin
-dm.restaurantsRepo.all()
-                .doOnSubscribe { showLoading() }
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .doOnNext { hideLoading() }
-                .subscribe( {
-
-                }, { error ->
-
-                })
+             try {
+                 toggleLoading(show = true)
+                 val result = dm.restaurantsRepo.all()
+             } catch (error: Exception) {
+                 // handle exception
+                 toggleLoading(show = false)
+             } finally {
+                 toggleLoading(show = false)
+             }
 ```
 
 ### After CorotineRequester
 
 ``` kotlin
-requester.request { dm.restaurantsRepo.all() }.subscribe { }
+coroutinesRequester.request { val result = dm.restaurantsRepo.all() }
 ```
 
 #### Gradle:
