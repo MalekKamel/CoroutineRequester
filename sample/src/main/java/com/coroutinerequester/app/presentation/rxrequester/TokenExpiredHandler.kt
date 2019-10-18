@@ -3,10 +3,6 @@ package com.coroutinerequester.app.presentation.rxrequester
 import com.sha.coroutinerequester.exception.handler.http.HttpExceptionHandler
 import com.sha.coroutinerequester.exception.handler.http.HttpExceptionInfo
 
-/**
- * Created by Sha on 10/9/17.
- */
-
 class TokenExpiredHandler : HttpExceptionHandler() {
 
     override fun supportedErrors(): List<Int> {

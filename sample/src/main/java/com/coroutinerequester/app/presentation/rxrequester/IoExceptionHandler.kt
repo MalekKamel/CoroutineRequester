@@ -8,10 +8,6 @@ import java.io.IOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-/**
- * Created by Sha on 10/9/17.
- */
-
 class IoExceptionHandler : ThrowableHandler<IOException>() {
 
     override fun supportedErrors(): List<Class<out IOException>> {

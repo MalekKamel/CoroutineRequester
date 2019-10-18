@@ -40,31 +40,27 @@ android {
 dependencies {
     implementation project(':lib')
 
-    api Deps.sdp
-    api Deps.ssp
-    api Deps.androidx_recyclerView
-    api Deps.androidx_constraintLayout
-    api Deps.androidx_cardView
-    api Deps.sha_navigator
+    implementation Deps.sdp
+    implementation Deps.ssp
+    implementation Deps.androidx_recyclerView
+    implementation Deps.androidx_constraintLayout
+    implementation Deps.androidx_cardView
+    implementation Deps.sha_navigator
 
-    api Deps.koin_android
-    api Deps.koin_ext
-    api Deps.koin_java
-    api Deps.koin_scope
-    api Deps.koin_viewModel
+    implementation Deps.koin_android
+    implementation Deps.koin_ext
+    implementation Deps.koin_java
+    implementation Deps.koin_scope
+    implementation Deps.koin_viewModel
 
-    api Deps.retrofit_runtime
-    api Deps.retrofit_adapter
-    api Deps.retrofit_converter
+    implementation Deps.retrofit_runtime
+    implementation Deps.retrofit_converter
 
-    api Deps.rx_java
-    api Deps.rx_android
+    implementation Deps.okHttp_runtime
+    implementation Deps.okHttp_interceptor
 
-    api Deps.okHttp_runtime
-    api Deps.okHttp_interceptor
+    implementation Deps.picasso
 
-    api Deps.picasso
-
-    api Deps.androidx_lifeCycle
-    api Deps.androidx_lifeCycle_viewModel_ktx
+    implementation Deps.androidx_lifeCycle
+    implementation Deps.androidx_lifeCycle_viewModel_ktx
 }

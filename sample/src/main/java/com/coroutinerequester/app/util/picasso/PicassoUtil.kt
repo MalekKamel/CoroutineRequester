@@ -11,10 +11,6 @@ import okhttp3.OkHttpClient
 import org.koin.java.KoinJavaComponent
 import java.io.File
 
-/**
- * Created by sha on 03/01/17.
- */
-
 class PicassoUtil {
 
     companion object {

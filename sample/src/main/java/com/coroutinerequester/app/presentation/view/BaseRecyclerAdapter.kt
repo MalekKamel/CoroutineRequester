@@ -3,10 +3,6 @@ package com.coroutinerequester.app.presentation.view
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-/**
- * Created by Sha on 4/20/17.
- */
-
 abstract class BaseRecyclerAdapter<M, VH
 : BaseViewHolder<M>>(var list: MutableList<M>) : RecyclerView.Adapter<VH>(){
 

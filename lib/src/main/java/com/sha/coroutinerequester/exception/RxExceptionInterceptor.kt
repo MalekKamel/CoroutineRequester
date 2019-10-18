@@ -4,10 +4,6 @@ package com.sha.coroutinerequester.exception
 import com.sha.coroutinerequester.Presentable
 import com.sha.coroutinerequester.CoroutineRequester
 
-/**
- * Created by Mickey on 4/1/17.
- */
-
 data class InterceptorArgs(
         val requester: CoroutineRequester,
         val presentable: Presentable,

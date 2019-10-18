@@ -8,11 +8,6 @@ import com.coroutinerequester.app.presentation.view.BaseViewHolder
 import com.coroutinerequester.app.util.picasso.PicassoUtil
 import kotlinx.android.synthetic.main.item_restaurant.view.*
 
-
-/**
- * Created by Sha on 4/20/17.
- */
-
 class RestaurantsAdapter(list: MutableList<Restaurant>) : BaseRecyclerAdapter<Restaurant, RestaurantsAdapter.Vh>(list) {
 
     override fun getViewHolder(viewGroup: ViewGroup, viewType: Int): Vh {
