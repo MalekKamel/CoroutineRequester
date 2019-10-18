@@ -38,7 +38,7 @@ allprojects {
 }
 
 dependencies {
-        implementation 'com.github.ShabanKamell:CorotineRequester:x.y.z'
+        implementation 'com.github.ShabanKamell:CoroutineRequester:x.y.z'
 }
 
 ```
