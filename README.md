@@ -2,11 +2,11 @@
 
 <img src="https://github.com/ShabanKamell/CoroutineRequester/blob/master/blob/raw/logo.png" height="200">
 
-A simple wrapper for RxJava that helps you:
-- [ ] Make clean RxJava requests
+A simple wrapper for Kotlin Coroutines that helps you:
+- [ ] Make clean Coroutine requests
 - [ ] Handle errors in a clean and effective way.
 
-RxRequester does all the dirty work for you!
+CorotineRequester does all the dirty work for you!
 
 ### Before CorotineRequester
 
