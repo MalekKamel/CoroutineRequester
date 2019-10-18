@@ -1,6 +1,5 @@
 package com.sha.coroutinerequester
 
-import androidx.lifecycle.ViewModel
 import com.sha.coroutinerequester.exception.ErrorMessage
 import com.sha.coroutinerequester.exception.InterceptorArgs
 import com.sha.coroutinerequester.exception.RxExceptionInterceptor
