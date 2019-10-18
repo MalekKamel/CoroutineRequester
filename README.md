@@ -42,7 +42,8 @@ dependencies {
 }
 
 ```
-(Please replace x, y and y with the latest version numbers:  [![](https://jitpack.io/v/ShabanKamell/CorotineRequester.svg)](https://jitpack.io/#ShabanKamell/CorotineRequester))
+(Please replace x, y and y with the latest version numbers:  [![](https://jitpack.io/v/ShabanKamell/CoroutineRequester.svg)](https://jitpack.io/#ShabanKamell/CoroutineRequester)
+
 
 ### Usage
 #### Setup
