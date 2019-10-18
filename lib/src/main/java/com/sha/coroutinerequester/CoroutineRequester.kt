@@ -83,13 +83,3 @@ class CoroutineRequester private constructor(
     }
 
 }
-
-fun <T: ErrorMessage> ViewModel.createCoroutineRequester(
-        serverErrorContract: Class<T>,
-        presentable: Presentable
-): CoroutineRequester {
-    return CoroutineRequester.create(
-            serverErrorContract = serverErrorContract,
-            presentable = presentable
-    )
-}
