@@ -32,8 +32,8 @@ open class BaseViewModel(val dm: DataManager)
 
         val requester = CoroutineRequester.create(ErrorContract::class.java, presentable)
 
-        if (CoroutineRequester.nonHttpHandlers.isEmpty())
-            CoroutineRequester.nonHttpHandlers = listOf(
+        if (CoroutineRequester.throwableHandlers.isEmpty())
+            CoroutineRequester.throwableHandlers = listOf(
                     IoExceptionHandler(),
                     NoSuchElementHandler(),
                     OutOfMemoryErrorHandler()

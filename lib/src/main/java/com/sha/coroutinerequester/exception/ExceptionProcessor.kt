@@ -99,7 +99,7 @@ internal object ExceptionProcessor {
             presentable: Presentable,
             requester: CoroutineRequester
     ) {
-        val optHandler = CoroutineRequester.nonHttpHandlers.firstOrNull { it.canHandle(throwable) }
+        val optHandler = CoroutineRequester.throwableHandlers.firstOrNull { it.canHandle(throwable) }
 
         if (optHandler == null) {
             uncaughtException(presentable, throwable)
