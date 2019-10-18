@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.rxrequester.sample"
+        applicationId "com.coroutinerequester.sample"
     }
 
     buildTypes {

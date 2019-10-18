@@ -32,8 +32,8 @@ class CoroutineRequester private constructor(
         /**
          * utility to support Java overloading
          */
-        fun <T: ErrorMessage> create(presentable: Presentable): CoroutineRequester {
-            return create<T>(null, presentable)
+        fun create(presentable: Presentable): CoroutineRequester {
+            return create<ErrorMessage>(null, presentable)
         }
     }
 
