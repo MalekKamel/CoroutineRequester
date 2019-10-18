@@ -60,7 +60,7 @@ val presentable = object: Presentable {
 ```
 
 #### Server Error Contract
-RxRequester parsers server error for you and shows the error automatically. Just implement `ErrorMessage`
+CoroutineRequester optionally parsers server error for you and shows the error automatically. Just implement `ErrorMessage`
 interface in your server error model and return the error message.
 
 ``` kotlin
@@ -73,7 +73,7 @@ data class ErrorContract(private val message: String): ErrorMessage {
 
 #### Handle Errors
 ```kotlin
-            CorotineRequester.nonHttpHandlers = listOf(
+            CorotineRequester.throwableHandlers = listOf(
                     IoExceptionHandler(),
                     NoSuchElementHandler(),
                     OutOfMemoryErrorHandler()
@@ -90,7 +90,7 @@ Error handler is a class that extends
 ``` kotlin
 class ServerErrorHandler : HttpExceptionHandler() {
 
-    override fun supportedExceptions(): List<Int> {
+    override fun supportedErrors(): List<Int> {
         return listOf(500)
     }
 
