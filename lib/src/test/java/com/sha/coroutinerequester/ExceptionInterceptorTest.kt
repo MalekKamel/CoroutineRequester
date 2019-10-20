@@ -4,6 +4,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.sha.coroutinerequester.exception.InterceptorArgs
 import com.sha.coroutinerequester.exception.ExceptionInterceptor
+import com.sha.coroutinerequester.handler.OutOfMemoryErrorHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before

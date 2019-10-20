@@ -3,6 +3,7 @@ package com.sha.coroutinerequester
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import com.sha.coroutinerequester.handler.OutOfMemoryErrorHandler
 import com.sha.coroutinerequester.util.MainCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

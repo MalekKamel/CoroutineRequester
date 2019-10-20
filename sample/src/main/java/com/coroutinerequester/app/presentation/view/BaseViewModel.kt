@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.coroutinerequester.app.R
 import com.coroutinerequester.app.data.DataManager
-import com.coroutinerequester.app.presentation.rxrequester.*
+import com.coroutinerequester.app.presentation.coroutinerequester.*
 import com.sha.coroutinerequester.Presentable
 import com.sha.coroutinerequester.CoroutineRequester
 
