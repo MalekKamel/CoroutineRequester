@@ -5,8 +5,7 @@ import kotlinx.coroutines.Dispatchers
 
 data class RequestOptions(
         var inlineHandling: ((Throwable) -> Boolean)? = null,
-        var showLoading: Boolean = true,
-        var dispatcher: CoroutineDispatcher = Dispatchers.Main
+        var showLoading: Boolean = true
 ){
 
     class Builder {

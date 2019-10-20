@@ -12,7 +12,7 @@ import retrofit2.HttpException
  * Created by Sha on 10/9/17.
  */
 
-internal object ExceptionProcessor {
+object ExceptionProcessor {
 
     fun process(
             throwable: Throwable,

@@ -51,23 +51,21 @@ class CoroutineRequester private constructor(
             requestInfo: RequestOptions = RequestOptions.defaultInfo(),
             block: suspend () -> Unit
     ) {
-         withContext(requestInfo.dispatcher) {
-            try {
-                toggleLoading(show = true)
-                block()
-            } catch (error: Exception) {
-                val args = InterceptorArgs(
-                        requester = this@CoroutineRequester,
-                        presentable = presentable,
-                        serverErrorContract = serverErrorContract,
-                        inlineHandling = requestInfo.inlineHandling,
-                        retryRequest = { request(requestInfo, block) }
-                )
-                RxExceptionInterceptor(args).accept(error)
-                toggleLoading(show = false)
-            } finally {
-                toggleLoading(show = false)
-            }
+        try {
+            toggleLoading(show = true)
+            block()
+        } catch (error: Exception) {
+            val args = InterceptorArgs(
+                    requester = this@CoroutineRequester,
+                    presentable = presentable,
+                    serverErrorContract = serverErrorContract,
+                    inlineHandling = requestInfo.inlineHandling,
+                    retryRequest = { request(requestInfo, block) }
+            )
+            RxExceptionInterceptor(args).accept(error)
+            toggleLoading(show = false)
+        } finally {
+            toggleLoading(show = false)
         }
     }
 
