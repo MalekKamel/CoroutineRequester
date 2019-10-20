@@ -12,7 +12,7 @@ data class InterceptorArgs(
         var retryRequest: suspend () -> Unit
 )
 
-class RxExceptionInterceptor(private val args: InterceptorArgs) {
+class ExceptionInterceptor(private val args: InterceptorArgs) {
 
     fun accept(throwable: Throwable) {
         throwable.printStackTrace()

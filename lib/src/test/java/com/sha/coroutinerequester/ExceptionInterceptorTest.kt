@@ -3,14 +3,14 @@ package com.sha.coroutinerequester
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.sha.coroutinerequester.exception.InterceptorArgs
-import com.sha.coroutinerequester.exception.RxExceptionInterceptor
+import com.sha.coroutinerequester.exception.ExceptionInterceptor
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class ExceptionInterceptor {
+class ExceptionInterceptorTest {
     private lateinit var presentable: Presentable
     lateinit var coroutineRequester: CoroutineRequester
 
@@ -30,7 +30,7 @@ class ExceptionInterceptor {
                 inlineHandling = { false },
                 retryRequest = {  }
         )
-        RxExceptionInterceptor(args).accept(OutOfMemoryError())
+        ExceptionInterceptor(args).accept(OutOfMemoryError())
         verify(presentable).showError("OutOfMemoryError")
     }
 
@@ -43,7 +43,7 @@ class ExceptionInterceptor {
                 inlineHandling = null,
                 retryRequest = {  }
         )
-        RxExceptionInterceptor(args).accept(OutOfMemoryError())
+        ExceptionInterceptor(args).accept(OutOfMemoryError())
 
         verify(presentable).showError("OutOfMemoryError")
     }
@@ -58,7 +58,7 @@ class ExceptionInterceptor {
                 inlineHandling = null,
                 retryRequest = { isRetryInvoked = true }
         )
-        RxExceptionInterceptor(args).accept(OutOfMemoryError())
+        ExceptionInterceptor(args).accept(OutOfMemoryError())
 
         verify(presentable).showError("OutOfMemoryError")
         assert(isRetryInvoked)
@@ -77,7 +77,7 @@ class ExceptionInterceptor {
                 },
                 retryRequest = {  }
         )
-        RxExceptionInterceptor(args).accept(OutOfMemoryError())
+        ExceptionInterceptor(args).accept(OutOfMemoryError())
 
         assert(isInlineHandlingInvoked)
     }

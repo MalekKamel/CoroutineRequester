@@ -2,7 +2,7 @@ package com.sha.coroutinerequester
 
 import com.sha.coroutinerequester.exception.ErrorMessage
 import com.sha.coroutinerequester.exception.InterceptorArgs
-import com.sha.coroutinerequester.exception.RxExceptionInterceptor
+import com.sha.coroutinerequester.exception.ExceptionInterceptor
 import com.sha.coroutinerequester.exception.handler.http.HttpExceptionHandler
 import com.sha.coroutinerequester.exception.handler.throwable.ThrowableHandler
 import kotlinx.coroutines.Dispatchers
@@ -62,7 +62,7 @@ class CoroutineRequester private constructor(
                     inlineHandling = requestInfo.inlineHandling,
                     retryRequest = { request(requestInfo, block) }
             )
-            RxExceptionInterceptor(args).accept(error)
+            ExceptionInterceptor(args).accept(error)
             toggleLoading(show = false)
         } finally {
             toggleLoading(show = false)
