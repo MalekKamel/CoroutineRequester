@@ -100,8 +100,9 @@ class OutOfMemoryErrorHandler: ThrowableHandler<OutOfMemoryError>() {
 
 ## Error Handlers Priority
 The library handles errors according to this priority
-##### 1- HTTP Handlers
-##### 2- Throwable Handlers
+#### 1- HTTP Handlers
+#### 2- Throwable Handlers
+The library first asks HTTP handlers to fix the error, if no HTTP handler can handle, the error will be passed to Throwable hanldlers. If it can't be handled, it will be passed to `Presentable.onHandleErrorFailed(Throwable)`
 
 ## Server Error Contract
 CoroutineRequester optionally parsers server error for you and shows the error automatically. Just implement `ErrorMessage`
