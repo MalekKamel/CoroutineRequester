@@ -60,7 +60,7 @@ val presentable = object: Presentable {
 ## Error Handling
 There're 2 types of error handlers in the library
 
-##### 1- Retrofit Http Handler
+#### 1- Retrofit Http Handler
 Handles Retrofit's HttpException
 
 ``` kotlin
@@ -75,7 +75,7 @@ class ServerErrorHandler : HttpExceptionHandler() {
     }
 }
 ```
-##### 2- Throwable Handler
+#### 2- Throwable Handler
 handles generic Throwables
 
 ``` kotin
@@ -103,7 +103,7 @@ The library handles errors according to this priority
 ##### 1- HTTP Handlers
 ##### 2- Throwable Handlers
 
-#### Server Error Contract
+## Server Error Contract
 CoroutineRequester optionally parsers server error for you and shows the error automatically. Just implement `ErrorMessage`
 interface in your server error model and return the error message.
 
@@ -117,7 +117,25 @@ data class ErrorContract(private val message: String): ErrorMessage {
 val requester = CorotineRequester.create(ErrorContract::class.java, presentable)
 ```
 
-#### Customizing Requests
+## Retrying The Request
+There're cases where you want to handle the error and resume the current request as normal. CoroutineRequester makes it easy to retry the current request, just call `HttpExceptionInfo.retryRequest().
+Imagine you received `401 token expired` error and you want to refresh the token then resume the original request. This can be done as easy as like this!
+
+``` kotlin
+class TokenExpiredHandler : HttpExceptionHandler() {
+
+    override fun supportedErrors(): List<Int> {
+        return listOf(401)
+    }
+
+    override fun handle(info: HttpExceptionInfo) {
+//        refreshTokenApit()
+//        info.retryRequest()
+    }
+}
+```
+
+## Customizing Requests
 CorotineRequester gives you the full controll over any request
 - [ ] Inline error handling
 - [ ] Enable/Disable loading indicators
@@ -145,24 +163,6 @@ Here're all request options and default values
 | **inlineHandling**           | Lambda       | null |
 | **showLoading**              | Boolean      | true |
 | **subscribeOnScheduler**     | CoroutineDispatcher    | Dispatchers.Main |
-
-### Retrying The Request
-There're cases where you want to handle the error and resume the current request as normal. CoroutineRequester makes it easy to retry the current request, just call `HttpExceptionInfo.retryRequest().
-Imagine you received `401 token expired` error and you want to refresh the token then resume the original request. This can be done as easy as like this!
-
-``` kotlin
-class TokenExpiredHandler : HttpExceptionHandler() {
-
-    override fun supportedErrors(): List<Int> {
-        return listOf(401)
-    }
-
-    override fun handle(info: HttpExceptionInfo) {
-//        refreshTokenApit()
-//        info.retryRequest()
-    }
-}
-```
 
 ### Best Practices
 - [ ] Setup `CorotineRequester` only once in `BaseViewModel` and reuse in the whole app.
