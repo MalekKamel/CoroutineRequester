@@ -60,7 +60,7 @@ val presentable = object: Presentable {
 ## Error Handling
 There're 2 types of error handlers in the library
 
-#### 1- Retrofit Http Handler
+### 1- Retrofit Http Handler
 Handles Retrofit's HttpException
 
 ``` kotlin
@@ -75,7 +75,7 @@ class ServerErrorHandler : HttpExceptionHandler() {
     }
 }
 ```
-#### 2- Throwable Handler
+### 2- Throwable Handler
 handles generic Throwables
 
 ``` kotin
