@@ -3,9 +3,10 @@
 <img src="https://github.com/ShabanKamell/CoroutineRequester/blob/master/blob/raw/logo.png" height="200">
 
 A simple wrapper for Kotlin Coroutines that helps you:
-- [ ] Make clean Coroutine requests
-- [ ] Handle errors in a clean and effective way.
-
+- [ ] Make clean RxJava requests.
+- [ ] Inline & Global error handling.
+- [ ] Resume the current request after errors like token expired error.
+- [ ] Easy control of loading indicators.
 CorotineRequester does all the dirty work for you!
 
 ### Before CorotineRequester
@@ -25,7 +26,7 @@ CorotineRequester does all the dirty work for you!
 ### After CorotineRequester
 
 ``` kotlin
-coroutinesRequester.request { val result = dm.restaurantsRepo.all() }
+coroutinesRequester.request { val result = restaurantsRepo.all() }
 ```
 
 #### Gradle:
@@ -44,9 +45,7 @@ dependencies {
 ```
 (Please replace x, y and y with the latest version numbers:  [![](https://jitpack.io/v/ShabanKamell/CoroutineRequester.svg)](https://jitpack.io/#ShabanKamell/CoroutineRequester)
 
-
-### Usage
-#### Setup
+### Setup
 
 ``` kotlin
 val presentable = object: Presentable {
@@ -59,35 +58,12 @@ val presentable = object: Presentable {
 
        val requester = CorotineRequester.create(ErrorContract::class.java, presentable)
 ```
+## Error Handling
+There're 2 types of error handlers in the library
 
-#### Server Error Contract
-CoroutineRequester optionally parsers server error for you and shows the error automatically. Just implement `ErrorMessage`
-interface in your server error model and return the error message.
+##### 1- Retrofit Http Handler
+Handles Retrofit's HttpException
 
-``` kotlin
-data class ErrorContract(private val message: String): ErrorMessage {
-    override fun errorMessage(): String {
-        return message
-    }
-}
-```
-
-#### Handle Errors
-```kotlin
-            CorotineRequester.throwableHandlers = listOf(
-                    IoExceptionHandler(),
-                    NoSuchElementHandler(),
-                    OutOfMemoryErrorHandler()
-            )
-            CorotineRequester.httpHandlers = listOf(
-                    TokenExpiredHandler(),
-                    ServerErrorHandler()
-            )
-```
-
-#### Error Handlers
-Error handler is a class that extends
-`HttpExceptionHandler`
 ``` kotlin
 class ServerErrorHandler : HttpExceptionHandler() {
 
@@ -100,10 +76,11 @@ class ServerErrorHandler : HttpExceptionHandler() {
     }
 }
 ```
+##### 2- Throwable Handler
+handles generic Throwables
 
-Or `NonHttpExceptionHandler`
 ``` kotin
-class OutOfMemoryErrorHandler : ThrowableHandler<OutOfMemoryError>() {
+class OutOfMemoryErrorHandler: ThrowableHandler<OutOfMemoryError>() {
 
     override fun supportedErrors(): List<Class<OutOfMemoryError>> {
         return listOf(OutOfMemoryError::class.java)
@@ -115,6 +92,32 @@ class OutOfMemoryErrorHandler : ThrowableHandler<OutOfMemoryError>() {
 }
 ```
 
+## How to provide handlers?
+
+```kotlin
+      CorotineRequester.httpHandlers =      listOf(ServerErrorHandler())
+      CorotineRequester.throwableHandlers = listOf(OutOfMemoryErrorHandler())
+```
+
+## Error Handlers Priority
+The library handles errors according to this priority
+##### 1- HTTP Handlers
+##### 2- Throwable Handlers
+
+#### Server Error Contract
+CoroutineRequester optionally parsers server error for you and shows the error automatically. Just implement `ErrorMessage`
+interface in your server error model and return the error message.
+
+``` kotlin
+data class ErrorContract(private val message: String): ErrorMessage {
+    override fun errorMessage(): String {
+        return message
+    }
+}
+// Pass the contract
+val requester = CorotineRequester.create(ErrorContract::class.java, presentable)
+```
+
 #### Customizing Requests
 CorotineRequester gives you the full controll over any request
 - [ ] Inline error handling
@@ -122,12 +125,18 @@ CorotineRequester gives you the full controll over any request
 - [ ] Set Coroutine dispatcher
 
 ``` kotlin
-val requestOptions = RequestOptions.Builder()
+        val requestOptions = RequestOptions().apply { 
+                inlineHandling = { false }
+                showLoading = true
+            }
+        /*
+        val requestOptions = RequestOptions.Builder()
                 .inlineErrorHandling { false }
                 .showLoading(true)
                 .dispatcher(Dispatchers.Main)
                 .build()
-requester.request(requestOptions) { dm.restaurantsRepo.all() }
+        */
+        requester.request(requestOptions) { restaurantsRepo.all() }
 ```
 
 Here're all request options and default values
@@ -139,8 +148,22 @@ Here're all request options and default values
 | **subscribeOnScheduler**     | CoroutineDispatcher    | Dispatchers.Main |
 
 ### Retrying The Request
-You can retry the request in any error handler class by calling `HttpExceptionInfo.retryRequest()`.
-This is very useful when you receive `401` indicating the token was EXPIRED. To fix the issue, call the refresh token API inside the handler, then retry the request again without interrupting the user. For more, look at `TokenExpiredHandler` in sample module.
+There're cases where you want to handle the error and resume the current request as normal. CoroutineRequester makes it easy to retry the current request, just call `HttpExceptionInfo.retryRequest().
+Imagine you received `401 token expired` error and you want to refresh the token then resume the original request. This can be done as easy as like this!
+
+``` kotlin
+class TokenExpiredHandler : HttpExceptionHandler() {
+
+    override fun supportedErrors(): List<Int> {
+        return listOf(401)
+    }
+
+    override fun handle(info: HttpExceptionInfo) {
+//        refreshTokenApit()
+//        info.retryRequest()
+    }
+}
+```
 
 ### Best Practices
 - [ ] Setup `CorotineRequester` only once in `BaseViewModel` and reuse in the whole app.
