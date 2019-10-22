@@ -3,7 +3,7 @@
 <img src="https://github.com/ShabanKamell/CoroutineRequester/blob/master/blob/raw/logo.png" height="200">
 
 A simple wrapper for Kotlin Coroutines that helps you:
-- [ ] Make clean RxJava requests.
+- [ ] Make clean Coroutine requests.
 - [ ] Inline & Global error handling.
 - [ ] Resume the current request after errors like token expired error.
 - [ ] Easy control of loading indicators.
