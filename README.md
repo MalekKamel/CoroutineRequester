@@ -7,7 +7,6 @@ A simple wrapper for Kotlin Coroutines that helps you:
 - [ ] Inline & Global error handling.
 - [ ] Resume the current request after errors like token expired error.
 - [ ] Easy control of loading indicators.
-CorotineRequester does all the dirty work for you!
 
 ### Before CorotineRequester
 
