@@ -151,7 +151,6 @@ CorotineRequester gives you the full controll over any request
         val requestOptions = RequestOptions.Builder()
                 .inlineErrorHandling { false }
                 .showLoading(true)
-                .dispatcher(Dispatchers.Main)
                 .build()
         */
         requester.request(requestOptions) { restaurantsRepo.all() }
