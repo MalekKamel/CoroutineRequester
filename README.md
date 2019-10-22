@@ -130,7 +130,7 @@ class TokenExpiredHandler : HttpExceptionHandler() {
     }
 
     override fun handle(info: HttpExceptionInfo) {
-//        refreshTokenApit()
+//        refreshTokenApi()
 //        info.retryRequest()
     }
 }
