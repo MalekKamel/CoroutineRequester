@@ -169,7 +169,7 @@ Here're all request options and default values
 - [ ] Initialize error handlers only once.
 - [ ] Use a scope for runnig coroutine. i.e. viewModelScope.
 
-#### Look at 'sample' module for the full code. For more advanced example.
+#### Look at 'sample' module for the full code
 
 ### License
 
