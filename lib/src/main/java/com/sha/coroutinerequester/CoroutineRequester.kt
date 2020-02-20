@@ -54,7 +54,7 @@ class CoroutineRequester private constructor(
         try {
             toggleLoading(show = true)
             block()
-        } catch (error: Exception) {
+        } catch (error: Throwable) {
             val args = InterceptorArgs(
                     requester = this@CoroutineRequester,
                     presentable = presentable,
