@@ -11,17 +11,7 @@ import com.sha.coroutinerequester.CoroutineRequester
 open class BaseViewModel(val dm: DataManager)
     : ViewModel() {
 
-    var coroutinesRequester: CoroutineRequester
-
-    val toggleLoading = MutableLiveData<Boolean>()
-    val showError = MutableLiveData<String>()
-    val showErrorRes = MutableLiveData<Int>()
-
-    init {
-        coroutinesRequester = setupCoroutinesRequester()
-    }
-
-    private fun setupCoroutinesRequester(): CoroutineRequester {
+    val requester: CoroutineRequester by lazy {
         val presentable = object: Presentable {
             override fun showError(error: String) { showError.value = error }
             override fun showError(error: Int) { showErrorRes.value = error }
@@ -43,8 +33,11 @@ open class BaseViewModel(val dm: DataManager)
                     TokenExpiredHandler(),
                     ServerErrorHandler()
             )
-        return requester
+        requester
     }
 
+    val toggleLoading = MutableLiveData<Boolean>()
+    val showError = MutableLiveData<String>()
+    val showErrorRes = MutableLiveData<Int>()
 }
 

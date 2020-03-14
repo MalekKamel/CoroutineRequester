@@ -48,19 +48,19 @@ class CoroutineRequester private constructor(
      *              spinner will stop
      */
     suspend fun request(
-            requestInfo: RequestOptions = RequestOptions.defaultInfo(),
+            options: RequestOptions = RequestOptions.default(),
             block: suspend () -> Unit
     ) {
         try {
-            toggleLoading(show = true)
+            if (options.showLoading) toggleLoading(show = options.showLoading)
             block()
         } catch (error: Throwable) {
             val args = InterceptorArgs(
                     requester = this@CoroutineRequester,
                     presentable = presentable,
                     serverErrorContract = serverErrorContract,
-                    inlineHandling = requestInfo.inlineHandling,
-                    retryRequest = { request(requestInfo, block) }
+                    inlineHandling = options.inlineHandling,
+                    retryRequest = { request(options, block) }
             )
             ExceptionInterceptor(args).accept(error)
             toggleLoading(show = false)

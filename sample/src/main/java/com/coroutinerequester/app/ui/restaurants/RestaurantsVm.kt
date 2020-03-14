@@ -22,11 +22,11 @@ class RestaurantsVm(dataManager: DataManager) : BaseViewModel(dataManager) {
 
     fun restaurants() {
         viewModelScope.launch {
-            val requestOptions = RequestOptions().apply {
+            val options = RequestOptions.create {
                 inlineHandling = { false }
                 showLoading = true
             }
-           coroutinesRequester.request(requestOptions) {
+           requester.request(options) {
                val result = dm.restaurantsRepo.all()
                val list: List<Restaurant> =  ListMapperImpl(RestaurantMapper()).map(result.restaurants)
                restaurants.value = list.toMutableList()

@@ -1,8 +1,5 @@
 package com.sha.coroutinerequester
 
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-
 data class RequestOptions(
         var inlineHandling: ((Throwable) -> Boolean)? = null,
         var showLoading: Boolean = true
@@ -27,8 +24,12 @@ data class RequestOptions(
     }
 
     companion object {
-        fun defaultInfo(): RequestOptions {
+        fun default(): RequestOptions {
             return Builder().build()
+        }
+
+        fun create(block: RequestOptions.() -> Unit): RequestOptions {
+            return Builder().build().apply { block }
         }
     }
 
