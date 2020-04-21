@@ -29,7 +29,7 @@ data class RequestOptions(
         }
 
         fun create(block: RequestOptions.() -> Unit): RequestOptions {
-            return Builder().build().apply { block }
+            return Builder().build().apply(block)
         }
     }
 
