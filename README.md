@@ -1,6 +1,11 @@
-# CorotineRequester
+<p align="center"><a href="https://github.com/ShabanKamell/CoroutineRequester"><img src="https://github.com/ShabanKamell/CoroutineRequester/blob/master/blob/raw/logo.png" alt="Gray shape shifter" height="200"/></a></p>
+<h1 align="center">CorotineRequester</h1>
+<p align="center">The easiest, most clean Android Coroutine requests handler</p>
 
-<img src="https://github.com/ShabanKamell/CoroutineRequester/blob/master/blob/raw/logo.png" height="200">
+<p align="center">
+	<a href="https://jitpack.io/#ShabanKamell/CoroutineRequester"> <img src="https://jitpack.io/v/ShabanKamell/CoroutineRequester.svg" height="20"/></a>
+<a href="https://twitter.com/intent/tweet?text=CorotineRequester,%20a%20declarative%20 handling of Coroutine requests for%20Android,%20simple,%20clean,%20and%20customizable.&url=https://github.com/ShabanKamell/CoroutineRequester&hashtags=android,kotlin,java,library,developers"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social" height="20"/></a>
+</p><br/><br/>
 
 A simple wrapper for Kotlin Coroutines that helps you:
 - [ ] Make clean Coroutine requests.
